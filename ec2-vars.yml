@@ -1,6 +1,6 @@
 key_name: "TeamRocket-KeyPair"
-aws_region: "us-east-1b"
-ami_id: "i-02d605919460b73d5"
+aws_region: "us-east-1"
+ami_id: "ami-66506c1c"
 ec2_instance_type: "t2.micro"
 security_group_name: "launch-wizard-5"
 subnet_ids: "subnet-a70f868a"

@@ -1,0 +1,41 @@
+---
+- name: Create AWS Resources
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  user: ubuntu
+  pre_tasks:
+    - include_vars: ./ec2-vars.yml
+  tasks:
+    - name: Security Group Creation
+      ec2_group:
+        name: "Security-1"
+        description: "Security Group for ec2_group"
+        region: "{{aws_region}}"
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: 0.0.0.0/0
+        rules_egress:
+          - proto: all
+            cidr_ip: 0.0.0.0/0
+      register: basic_firewall
+
+    - name: Create an EC2 instance
+      local_action:
+        module: ec2
+        key_name: "{{key_name}}"
+        group_id: "{{basic_firewall.group_id}}"
+        instance_type: "{{ec2_instance_type}}"
+        image: "{{ami_id}}"
+        vpc_subnet_id: "{{subnet_ids}}"
+        region: "{{aws_region}}"
+        assign_public_ip: yes
+        wait: yes
+        count: 1
+      register: ec2
