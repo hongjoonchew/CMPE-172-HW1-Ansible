@@ -1,5 +1,5 @@
 ---
-  - name: Undeploy Apache Webserver and EC2 instances
+  - name: Undeploy Apache Webserver
     hosts: team_rocket
     remote_user: ubuntu
     gather_facts: false
@@ -10,17 +10,3 @@
         raw: sudo apt-get -y purge apache2 apache2-utils apache2.2-bin
       - name: autoremove
         raw: sudo apt-get -y autoremove
-
-  - name: Removing EC2 instance
-    hosts: localhost
-    connection: local
-    gather_facts: false
-    pre_tasks:
-      - include_vars: ./ec2-vars.yml
-    tasks:
-      - name: ec2 removal
-        local_action:
-            module: ec2
-            instance_ids: "{{ ec2.instance_ids }}"
-            region: "{{aws_region}}"
-            state: "absent"

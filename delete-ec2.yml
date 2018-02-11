@@ -1,0 +1,19 @@
+---
+- name: Removing EC2 instance
+  hosts: localhost
+  connection: local
+  gather_facts: true
+  pre_tasks:
+    - include_vars: ./ec2-vars.yml
+  tasks:
+    - name: Gather Facts From EC2
+      ec2_instance_facts:
+          region: '{{aws_region}}'
+      register: ec2
+    - name: Delete for EC2 removal
+      ec2:
+        state: 'absent'
+        instance_ids: '{{item.instance_id}}'
+        region: '{{aws_region}}'
+      with_items: '{{ec2.instances}}'
+    

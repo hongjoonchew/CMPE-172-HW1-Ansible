@@ -1,3 +1,0 @@
----
-  - include: tr-ec2-create.yml
-  - include: deploy-webserver.yml

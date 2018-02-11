@@ -8,7 +8,7 @@
       ansible_ssh_private_key_file: TeamRocket-KeyPair.pem
     tasks:
 
-      - name: install  python
+      - name: Install  python
         raw: sudo apt-get -y install python
 
       - name: Install apache2

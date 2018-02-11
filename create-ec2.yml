@@ -9,7 +9,7 @@
   tasks:
     - name: Security Group Creation
       ec2_group:
-        name: "Security-1"
+        name: "Security-CMPE-172"
         description: "Security Group for ec2_group"
         region: "{{aws_region}}"
         rules:
@@ -41,7 +41,7 @@
         count: 1
       register: ec2
 
-    - name: Add the newly created EC2 instance(s) to the local host group
+    - name: Add the newly created EC2 instance(s) to the local host group #Requires sudo
       lineinfile:
           dest: /etc/ansible/hosts
           regexp: "{{ item.public_ip }}"
