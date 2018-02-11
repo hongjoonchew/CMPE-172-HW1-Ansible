@@ -1,0 +1,3 @@
+---
+  - include: undeploy-webserver.yml
+  - include: delete-ec2.yml
